@@ -215,7 +215,7 @@ If you're building something in this space — autonomous agents, LLM-powered au
 
 Built by **Jaylon M.** as part of Flash AI Solutions. Solo developer, full-stack, VPS-native.
 
-- Portfolio: [flashaisolutions.org](https://flashaisolutions.org)
+- Portfolio: [flashaisolutions.org](https://www.flashaisolutions.org/)
 - Upwork: [Jaylon M. on Upwork](https://www.upwork.com/freelancers/~01601bd8cb59de1ef6)
 - Contact: theflashaisolutions@gmail.com
 
