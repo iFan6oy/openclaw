@@ -2,7 +2,7 @@
 
 **An autonomous AI agent that runs 24/7 on a VPS with real tool access, persistent memory, and operator-in-the-loop guardrails.**
 
-OpenClaw is not a chatbot. It's an autonomous entity built around a long-running think loop — every 30 minutes it wakes up, reads its own memory, decides what to work on, uses real tools (shell, filesystem, HTTP, crypto, APIs), and reports back via Telegram.
+OpenClaw is not a chatbot. It's an autonomous entity built around a long-running think loop: every 30 minutes it wakes up, reads its own memory, decides what to work on, uses real tools (shell, filesystem, HTTP, crypto, APIs), and reports back via Telegram.
 
 Built solo by **Flash AI Solutions** over several months of iteration on a live production VPS. Currently deployed in janitor mode, monitoring a 10-service stack of trading bots, APIs, and background workers.
 
@@ -30,19 +30,19 @@ It is not prompted to respond. It decides what to think about.
 
 Running system, not a concept.
 
-**Think cycle in progress** — the agent loads state, runs research, calls Claude Sonnet, parses an action plan, and executes. Each line below is a single cycle frame from the live log:
+**Think cycle in progress**: the agent loads state, runs research, calls Claude Sonnet, parses an action plan, and executes. Each line below is a single cycle frame from the live log:
 
 ![Think cycle](screenshots/openclawthinkcycle.png)
 
-**Telegram operator UX** — the agent proactively reports status, not just on demand. Below: a status report the agent wrote itself during a janitor-mode cycle, covering every service it monitors:
+**Telegram operator UX**: the agent proactively reports status, not just on demand. Below: a status report the agent wrote itself during a janitor-mode cycle, covering every service it monitors:
 
 ![Clawbot Telegram](screenshots/clawbottg.png)
 
-**PM2 process fleet** — all four OpenClaw services running alongside sibling stacks on the same VPS, with multi-day uptimes:
+**PM2 process fleet**: all four OpenClaw services running alongside sibling stacks on the same VPS, with multi-day uptimes:
 
 ![PM2 list](screenshots/clawbotprocesses.png)
 
-**Live API response** — the agent's own REST API, hit with an authenticated request, returning real trending-token data it uses for its own research:
+**Live API response**: the agent's own REST API, hit with an authenticated request, returning real trending-token data it uses for its own research:
 
 ![API response](screenshots/apiresponse.png)
 
@@ -55,7 +55,7 @@ Running system, not a concept.
 │                      OpenClaw Agent                         │
 │                                                             │
 │   ┌─────────────────────────────────────────────────────┐   │
-│   │   Think Loop (agent.js) — 30 min cycles             │   │
+│   │   Think Loop (agent.js): 30 min cycles             │   │
 │   │   ─────────────────────────────────────────────     │   │
 │   │   Memory load → Context build → Claude Sonnet 4     │   │
 │   │   → Action plan → Safety classifier →               │   │
@@ -63,7 +63,7 @@ Running system, not a concept.
 │   └──┬──────────────────────────────────────────────────┘   │
 │      │                                                      │
 │      │    ┌──────────────────────────────────────────┐     │
-│      ├───▶│   Tool Layer (tools.js) — ~20 tools      │     │
+│      ├───▶│   Tool Layer (tools.js): ~20 tools      │     │
 │      │    │   HTTP / Shell / Filesystem / Telegram   │     │
 │      │    │   Crypto prices / Wallet ops / Swaps     │     │
 │      │    │   Stripe / Twitter / Grok research       │     │
@@ -73,7 +73,7 @@ Running system, not a concept.
 │      │    ┌──────────────────────────────────────────┐     │
 │      ├───▶│   Memory System (memory.js + MEMORY.md)  │     │
 │      │    │   Lessons learned, completed assets,     │     │
-│      │    │   decisions, open questions — persisted  │     │
+│      │    │   decisions, open questions: persisted  │     │
 │      │    │   across restarts                        │     │
 │      │    └──────────────────────────────────────────┘     │
 │      │                                                      │
@@ -106,19 +106,19 @@ Running system, not a concept.
 ### Autonomous think loop
 - 30-minute cycle runs continuously on a PM2 daemon
 - Reads its own memory, makes its own decisions, does its own work
-- No human prompt required to function — it *generates* its own prompts from context
+- No human prompt required to function: it *generates* its own prompts from context
 
 ### Real tool access (~20 tools)
-- **HTTP**: `http_get`, `http_post`, `http_request` — hit any API with any method
-- **Shell**: `run_command` with guardrails — blocks destructive operations on protected processes and paths
-- **Filesystem**: `read_file`, `write_file`, `list_dir` — full VPS filesystem access
-- **Telegram**: `notify`, `notify_topic` — send messages to the operator via bot
-- **Crypto**: `get_price`, `check_balance`, `swap_token`, `send_sol`, `send_token` — real on-chain Solana operations via Jupiter + Helius
-- **Stock data**: `stock_quote` — Alpaca market data integration
-- **Twitter**: `tweet`, `tweet_thread` — X/Twitter posting via API v2
-- **Stripe**: `stripe_create_link`, `stripe_list_payments` — real payment infrastructure
-- **API testing**: `test_endpoint` — curl its own REST API to verify health
-- **Research**: `grok_ask` — xAI Grok API for X/Twitter trend research
+- **HTTP**: `http_get`, `http_post`, `http_request`: hit any API with any method
+- **Shell**: `run_command` with guardrails: blocks destructive operations on protected processes and paths
+- **Filesystem**: `read_file`, `write_file`, `list_dir`: full VPS filesystem access
+- **Telegram**: `notify`, `notify_topic`: send messages to the operator via bot
+- **Crypto**: `get_price`, `check_balance`, `swap_token`, `send_sol`, `send_token`: real on-chain Solana operations via Jupiter + Helius
+- **Stock data**: `stock_quote`: Alpaca market data integration
+- **Twitter**: `tweet`, `tweet_thread`: X/Twitter posting via API v2
+- **Stripe**: `stripe_create_link`, `stripe_list_payments`: real payment infrastructure
+- **API testing**: `test_endpoint`: curl its own REST API to verify health
+- **Research**: `grok_ask`: xAI Grok API for X/Twitter trend research
 
 ### Safety architecture
 - **Safe-tool whitelist**: Only designated tools auto-execute. Everything else requires operator approval via Telegram.
@@ -130,12 +130,12 @@ Running system, not a concept.
 ### Persistent memory
 - Long-term memory file (`MEMORY.md`) with sections for lessons, completed work, decisions, open questions
 - Survives restarts, crashes, redeploys
-- Used as context on every think cycle — agent compounds knowledge over time
+- Used as context on every think cycle: agent compounds knowledge over time
 
 ### Multi-model resilience
 - Primary: Claude Sonnet 4 via Anthropic SDK
 - Optional cascade: OpenRouter, Grok, local models (configured, not always active)
-- "Skip the cycle" fallback if no model is available — won't degrade silently to a dumber model
+- "Skip the cycle" fallback if no model is available: won't degrade silently to a dumber model
 
 ### REST API server
 - 13 REST endpoints on port 3800, protected by API key middleware
@@ -176,10 +176,10 @@ Running system, not a concept.
 ```
 
 Runs as four independent PM2 processes for isolation and restart independence:
-- `openclaw-agent` — the think loop
-- `openclaw-api` — the REST API server
-- `clawbot-tg` — the user-facing Telegram bot
-- `clawbot-x` — X/Twitter posting bot
+- `openclaw-agent`: the think loop
+- `openclaw-api`: the REST API server
+- `clawbot-tg`: the user-facing Telegram bot
+- `clawbot-x`: X/Twitter posting bot
 
 ---
 
@@ -190,7 +190,7 @@ Runs as four independent PM2 processes for isolation and restart independence:
 - **Do not rewrite files that already exist and have content.** Read first, then decide.
 - **The think interval is a hyperparameter.** 30 minutes works for janitor-style work. Shorter cycles = more action but more cost and more mistakes. Longer cycles = missed opportunities.
 - **The safety classifier is the most important piece of the architecture.** Without it, an autonomous agent with shell access is a liability. With it, it's an employee.
-- **Autonomous agents hallucinate wins.** They will tell you they completed tasks that never ran. A grounding mechanism — "did this endpoint actually respond?" "did this file actually get written?" — is non-negotiable before re-missioning into build mode.
+- **Autonomous agents hallucinate wins.** They will tell you they completed tasks that never ran. A grounding mechanism: "did this endpoint actually respond?" "did this file actually get written?": is non-negotiable before re-missioning into build mode.
 
 ---
 
@@ -207,7 +207,7 @@ For potential clients, this project shows experience with:
 - Cost-conscious model cascading
 - Operational debugging (error feedback loops, self-healing, structured logging)
 
-If you're building something in this space — autonomous agents, LLM-powered automation, AI integrations with real tool access — this is the kind of work I do.
+If you're building something in this space: autonomous agents, LLM-powered automation, AI integrations with real tool access: this is the kind of work I do.
 
 ---
 
